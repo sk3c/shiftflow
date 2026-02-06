@@ -1,24 +1,36 @@
-name: CI pipeline
+name: Project Setup and Github Pages deploy
 
 on:
   push:
     branches: [main]
 
-  jobs:
-    build:
-      runs: ubuntu-latest
+jobs:
+  build:
+    runs: ubuntu-latest
 
-      steps:
-        name: checkout code
-        use: actions/checkout@v5
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
 
-        name: setup nodejs
-        use: actions/setup-node@v3
-        with: node-version 20
+      - name: setup nodejs
+        uses: actions/setup-node@v2
+        with: node-version 19
 
-        name: Install Dependencies
+      - name: Install Dependencies
         run: npm install
 
-        name: Run Test
+      - name: Build Project
+        run: npm run build
+
+      - name: Run Test
         run: npm test
+
+      - name: Deploy On Github Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: dist
+
+
+
 
