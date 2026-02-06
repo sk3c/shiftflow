@@ -5,8 +5,8 @@ on:
     branches: [main]
 
 jobs:
-  build:
-    run: ubuntu-latest
+  build-job:
+    runs-on: ubuntu-latest
 
     steps:
       - name: checkout code
@@ -14,7 +14,8 @@ jobs:
 
       - name: setup nodejs
         uses: actions/setup-node@v2
-        with: node-version 19
+        with:
+          node-version: 19
 
       - name: Install Dependencies
         run: npm install
